@@ -6,3 +6,5 @@
 - Kyle Haynes
 - Daniel Eichhorn
 - Gerald Parker
+- Kennedy Palmer
+
