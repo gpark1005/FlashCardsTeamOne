@@ -1,10 +1,7 @@
 # FlashCardsTeamOne
 
+## Authors
 
-
-# Authors
-<<<<<<< Updated upstream
 - Jalah McKillion
-=======
-Gerald Parker
->>>>>>> Stashed changes
+- Kyle Haynes
+  Gerald Parker
