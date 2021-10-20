@@ -4,3 +4,4 @@
 
 # Authors
 - Jalah McKillion
+- Daniel Eichhorn
