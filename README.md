@@ -4,7 +4,5 @@
 
 - Jalah McKillion
 - Kyle Haynes
-- Daniel Eichhorn
-- Gerald Parker
-- Kennedy Palmer
+- Austin Nicholson
 
