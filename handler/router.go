@@ -11,7 +11,7 @@ func ConfigureRouter(handler InfoHandler) *mux.Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/flashcards", handler.PostNewDeck).Methods("POST")
-	r.HandleFunc("/flashcards", handler.PostNewInfo).Methods("POST")
+	r.HandleFunc("/flashcards/{info}", handler.PostNewInfo).Methods("POST")
 
 	return r
 }
