@@ -9,7 +9,7 @@ import (
 )
 
 type Service interface {
-	PostNewInfo(Card incomingdata.Info) error
+	PostNewInfo(card incomingdata.Info) error
 }
 
 type InfoHandler struct {
@@ -22,18 +22,7 @@ func NewInfoHandler(s Service) InfoHandler {
 	}
 }
 
-func (ih InfoHandler) PostNewDeck(w http.ResponseWriter, r *http.Request) {
-
-	deck := incomingdata.Deck{}
-
-	err := json.NewDecoder(r.Body).Decode(&deck)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-}
-
-func (ih InfoHandler) PostNewInfo(w http.ResponseWriter, r *http.Request) {
+func (ih InfoHandler) HandleNewInfo(w http.ResponseWriter, r *http.Request) {
 
 	card := incomingdata.Info{}
 
@@ -44,7 +33,7 @@ func (ih InfoHandler) PostNewInfo(w http.ResponseWriter, r *http.Request) {
 
 	err = ih.Svc.PostNewInfo(card)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest) // 
+		http.Error(w, err.Error(), http.StatusBadRequest) //
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")

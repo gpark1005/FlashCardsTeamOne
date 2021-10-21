@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 
+	"github.com/google/uuid"
 	"github.com/gpark1005/FlashCardsTeamOne/incomingdata"
 )
 
@@ -21,22 +22,26 @@ func NewRepo(fn string) Repo {
 	}
 }
 
-func (r Repo) CreateNewInfo(Card incomingdata.Info) error {
-	NI := NewInfo{}
+func (r Repo) CreateNewInfo(card incomingdata.Info) error {
+	newcard := NewInfo{}
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
 		return err
 	}
 
-	err = json.Unmarshal(output, &NI)
+	err = json.Unmarshal(output, &newcard)
 	if err != nil {
 		return err
 	}
 
-	NI.Flashcard = append(NI.Flashcard, Card)
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
 
-	input, err := json.MarshalIndent(NI, "", "	")
+	newcard.Flashcard = append(newcard.Flashcard, card)
+
+	input, err := json.MarshalIndent(newcard, "", "	")
 	if err != nil {
 		return err
 	}
