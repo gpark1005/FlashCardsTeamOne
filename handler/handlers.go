@@ -9,6 +9,7 @@ import (
 )
 
 type Service interface {
+	PostNewInfo(Card incomingdata.Info) error
 }
 
 type InfoHandler struct {
@@ -41,5 +42,10 @@ func (ih InfoHandler) PostNewInfo(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	
+	err = ih.Svc.PostNewInfo(card)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest) // 
+	}
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
 }
