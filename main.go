@@ -1,17 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"path/filepath"
 	"log"
+	"path/filepath"
+
 	"github.com/gpark1005/FlashCardsTeamOne/handler"
+	"github.com/gpark1005/FlashCardsTeamOne/repo"
+	"github.com/gpark1005/FlashCardsTeamOne/service"
 )
 
-
-
 func main() {
-	fmt.Println("Hello team!")
-
 	fn := "FlashCardsTeamOne\flashcardsDb.json"
 
 	ext := filepath.Ext(fn)
@@ -27,10 +25,5 @@ func main() {
 
 	router := handler.ConfigureRouter(hdlr)
 
-	svr := &http.Server{
-		Addr:    "127.0.0.1:8080",
-		Handler: router,
-	}
-
-	log.Fatalln(svr.ListenAndServe())
+	handler.NewServer(router)
 }

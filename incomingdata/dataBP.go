@@ -1,8 +1,12 @@
 package incomingdata
 
-type Info struct {
-	Id	string
-	Type string
-	Information string
+type NewDeck struct {
+	Catagory string
+	QuizInfo Info
 }
 
+type Info struct {
+	Id          string
+	Type        string
+	Information string
+}
