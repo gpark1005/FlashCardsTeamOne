@@ -1,8 +1,6 @@
 package service
 
-import (
-
-)
+import "github.com/gpark1005/FlashCardsTeamOne/incomingdata"
 
 type Repo interface {
 
@@ -16,4 +14,8 @@ func NewService(r Repo) Service {
 	return Service{
 		Repo: r,
 	}
+}
+
+func (s Service) PostNewInfo(Card incomingdata.Info) error {
+	
 }

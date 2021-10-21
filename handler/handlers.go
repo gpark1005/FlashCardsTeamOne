@@ -23,7 +23,7 @@ func NewInfoHandler(s Service) InfoHandler {
 
 func (ih InfoHandler) PostNewDeck(w http.ResponseWriter, r *http.Request) {
 
-	deck := incomingdata.NewDeck{}
+	deck := incomingdata.Deck{}
 
 	err := json.NewDecoder(r.Body).Decode(&deck)
 	if err != nil {
@@ -41,4 +41,5 @@ func (ih InfoHandler) PostNewInfo(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
+	
 }

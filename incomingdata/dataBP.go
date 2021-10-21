@@ -1,8 +1,8 @@
 package incomingdata
 
-type NewDeck struct {
+type Deck struct {
 	Catagory string
-	QuizInfo Info
+	QuizInfo []Info
 }
 
 type Info struct {
