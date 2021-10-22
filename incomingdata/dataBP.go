@@ -1,13 +1,15 @@
 package incomingdata
 
+type test interface{}
+
 //Matching start
 type Matching struct {
-	Id       string    `json:"id"`
-	Type     string    `json:"type"`
-	Category string    `json:"category"`
-	Quesions MatchingQ `json:"questions"`
-	Options  MatchingO `json:"options"`
-	Answers  MatchingA `json:"answers"`
+	Id       string                 `json:"id"`
+	Type     string                 `json:"type"`
+	Category string                 `json:"category"`
+	Quesions map[string]interface{} `json:"questions"` //map to string/interface
+	Options  map[string]interface{} `json:"options"`
+	Answers  map[string]interface{} `json:"answers"`
 }
 
 type MatchingQ struct {
