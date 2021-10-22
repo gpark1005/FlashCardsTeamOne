@@ -1,9 +1,14 @@
 {
 	"Flashcard": [
 		{
-			"Id": "4dcd16bf-2820-403f-b898-fe17fc4e6f97",
-			"Type": "info",
-			"Information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. "
+			"id": "4dcd16bf-2820-403f-b898-fe17fc4e6f97",
+			"type": "info",
+			"information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. "
+		},
+		{
+			"id": "b99ad45e-015a-4b08-93e5-683d7d0b96c7",
+			"type": "info",
+			"information": "test after refactor"
 		}
 	]
 }

@@ -8,9 +8,9 @@ import (
 	"github.com/gpark1005/FlashCardsTeamOne/incomingdata"
 )
 
-type NewInfo struct {
-	Flashcard []incomingdata.Info
-}
+// type NewInfo struct {
+// 	Flashcard []incomingdata.Info
+// }
 
 type Repo struct {
 	Filename string
@@ -23,7 +23,7 @@ func NewRepo(fn string) Repo {
 }
 
 func (r Repo) CreateNewInfo(card incomingdata.Info) error {
-	newcard := NewInfo{}
+	newcard := incomingdata.NewInfo{}
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
@@ -53,13 +53,13 @@ func (r Repo) CreateNewInfo(card incomingdata.Info) error {
 	return nil
 }
 
-func (r Repo) GetAllFlashcards() (NewInfo, error) {
+func (r Repo) GetAllFlashcards() (incomingdata.NewInfo, error) {
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return NewInfo{}, err
+		return incomingdata.NewInfo{}, err
 	}
 
-	flashcards := NewInfo{}
+	flashcards := incomingdata.NewInfo{}
 	err = json.Unmarshal(file, &flashcards)
 	if err != nil {
 		return flashcards, err
