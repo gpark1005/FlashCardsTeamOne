@@ -6,6 +6,7 @@
 			"information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. "
 		},
 		{
+<<<<<<< HEAD
 			"id": "94243a20-521c-4198-bccc-e553a5922747",
 			"type": "info",
 			"information": "test "
@@ -14,6 +15,11 @@
 			"id": "ded3e048-d97a-4f02-88cf-4cd6e840219b",
 			"type": "info",
 			"information": "test 2.0 "
+=======
+			"id": "b99ad45e-015a-4b08-93e5-683d7d0b96c7",
+			"type": "info",
+			"information": "test after refactor"
+>>>>>>> 82d5b036311e02943cb63915a28cee269676e0a2
 		}
 	]
 }

@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"github.com/gpark1005/FlashCardsTeamOne/repo"
 	"github.com/gpark1005/FlashCardsTeamOne/incomingdata"
 )
 
 type Service interface {
 	PostNewInfo(card incomingdata.Info) error
-	GetAllFlashcards() (repo.NewInfo, error)
+	GetAllFlashcards() (incomingdata.NewInfo, error)
 }
 
 type InfoHandler struct {

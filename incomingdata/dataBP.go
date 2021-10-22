@@ -74,4 +74,8 @@ type MultipleChoiceO struct {
 	Four  string `json:"4"`
 }
 
+type NewInfo struct {
+	Flashcard []Info
+}
+
 //MC end
