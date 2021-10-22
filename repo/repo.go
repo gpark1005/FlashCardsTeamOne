@@ -52,3 +52,17 @@ func (r Repo) CreateNewInfo(card incomingdata.Info) error {
 	}
 	return nil
 }
+
+func (r Repo) GetAllFlashcards() (NewInfo, error) {
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return NewInfo{}, err
+	}
+
+	flashcards := NewInfo{}
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return flashcards, err
+	}
+	return flashcards, nil
+}

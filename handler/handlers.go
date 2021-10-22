@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-
+	"github.com/gpark1005/FlashCardsTeamOne/repo"
 	"github.com/gpark1005/FlashCardsTeamOne/incomingdata"
 )
 
 type Service interface {
 	PostNewInfo(card incomingdata.Info) error
+	GetAllFlashcards() (repo.NewInfo, error)
 }
 
 type InfoHandler struct {
@@ -37,4 +38,20 @@ func (ih InfoHandler) HandleNewInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
+}
+
+func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Request) {
+	myDb, err := ih.Svc.GetAllFlashcards()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	db, err := json.MarshalIndent(myDb, "", " ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(db)
 }
