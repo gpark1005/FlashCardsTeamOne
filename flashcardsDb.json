@@ -1,25 +1,102 @@
 {
-	"Flashcard": [
+	"Flashcards": [
 		{
 			"id": "4dcd16bf-2820-403f-b898-fe17fc4e6f97",
-			"type": "info",
-			"information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. "
+			"information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. ",
+			"type": "info"
 		},
 		{
-<<<<<<< HEAD
-			"id": "94243a20-521c-4198-bccc-e553a5922747",
-			"type": "info",
-			"information": "test "
-		},
-		{
-			"id": "ded3e048-d97a-4f02-88cf-4cd6e840219b",
-			"type": "info",
-			"information": "test 2.0 "
-=======
 			"id": "b99ad45e-015a-4b08-93e5-683d7d0b96c7",
-			"type": "info",
-			"information": "test after refactor"
->>>>>>> 82d5b036311e02943cb63915a28cee269676e0a2
+			"information": "test after refactor",
+			"type": "info"
+		},
+		{
+			"id": "e6d22eb3-b5bc-4dad-82da-8e92926c9be1",
+			"information": "A unit test is a way of testing a unit - the smallest piece of code that can be logically isolated in a system. In most programming languages, that is a function, a subroutine, a method or property.",
+			"type": "info"
+		},
+		{
+			"id": "89fd0288-cb55-4646-8be8-e3e7f13bbce3",
+			"information": "Git is software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development.",
+			"type": "info"
+		},
+		{
+			"answers": {
+				"a": "2",
+				"b": "4",
+				"c": "7",
+				"d": "1"
+			},
+			"category": "Golang",
+			"id": "4887909b-2ea9-486e-9f82-1fb3050b3467",
+			"options": {
+				"1": "Option 1",
+				"2": "Option 2",
+				"3": "Option 3",
+				"4": "Option 4"
+			},
+			"questions": {
+				"A": "Questions A",
+				"B": "Questions B",
+				"C": "Questions C",
+				"D": "Questions D"
+			},
+			"type": "matching"
+		},
+		{
+			"answers": 4,
+			"category": "Golang",
+			"id": "76c37500-447e-4104-808d-6a4f3485a6b8",
+			"options": {
+				"1": "Compilation time is fast.",
+				"2": "Support for Interfaces and Type embedding.",
+				"3": "Concurrency support",
+				"4": "All of the above"
+			},
+			"question": "What are the benefits of using Go programming?",
+			"type": "multiple"
+		},
+		{
+			"answer": "False",
+			"category": "Golang",
+			"id": "7f08a8fb-7601-4056-9c75-25a2040c2c7a",
+			"question": "Does Go support pointer arithmetics?",
+			"type": "torf"
+		},
+		{
+			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed.",
+			"id": "9ca1fa8a-80b2-45da-8d6e-5b68ad6f5cd6",
+			"question": "What is Go?",
+			"type": "qanda"
+		},
+		{
+			"answers": {
+				"a": "test",
+				"b": "test",
+				"c": "test",
+				"d": "test"
+			},
+			"category": "Golang",
+			"id": "1712f120-a3ff-4ace-bc0c-61c94fd0d544",
+			"options": {
+				"1": "Option 1",
+				"2": "Option 2",
+				"3": "Option 3",
+				"4": "Option 4"
+			},
+			"questions": {
+				"A": "Questions A",
+				"B": "Questions B",
+				"C": "Questions C",
+				"D": "Questions D"
+			},
+			"type": "matching"
+		},
+		{
+			"id": "97eb486b-78cb-423a-8670-e0b769e8aa3e",
+			"type": "qanda",
+			"question": "What is Go?",
+			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed."
 		}
 	]
 }

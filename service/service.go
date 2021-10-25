@@ -1,12 +1,18 @@
 package service
 
 import (
-	"github.com/gpark1005/FlashCardsTeamOne/incomingdata"
+	"github.com/google/uuid"
+	"github.com/gpark1005/FlashCardsTeamOne/cards"
+	"github.com/gpark1005/FlashCardsTeamOne/repo"
 )
 
 type Repo interface {
-	CreateNewInfo(card incomingdata.Info) error
-	GetAllFlashcards() (incomingdata.NewInfo, error) 
+	CreateNewMatching(card cards.Matching) error
+	CreateNewMultiple(card cards.MultipleChoice) error
+	CreateNewInfo(card cards.Info) error
+	CreateNewQNA(card cards.QNA) error
+	CreateNewTORF(card cards.TrueOrFalse) error
+	GetAllFlashcards() (repo.Db, error)
 }
 
 type Service struct {
@@ -19,7 +25,10 @@ func NewService(r Repo) Service {
 	}
 }
 
-func (s Service) PostNewInfo(card incomingdata.Info) error {
+func (s Service) PostNewInfo(card cards.Info) error {
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
 	err := s.Repo.CreateNewInfo(card)
 	if err != nil {
 		return err
@@ -27,7 +36,51 @@ func (s Service) PostNewInfo(card incomingdata.Info) error {
 	return nil
 }
 
-func (s Service) GetAllFlashcards() (incomingdata.NewInfo, error){
+func (s Service) PostNewMatching(card cards.Matching) error {
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
+	err := s.Repo.CreateNewMatching(card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) PostNewMultiple(card cards.MultipleChoice) error {
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
+	err := s.Repo.CreateNewMultiple(card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) PostNewQNA(card cards.QNA) error {
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
+	err := s.Repo.CreateNewQNA(card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) PostNewTORF(card cards.TrueOrFalse) error {
+	if card.Id == "" {
+		card.Id = uuid.New().String()
+	}
+	err := s.Repo.CreateNewTORF(card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) GetAllFlashcards() (repo.Db, error) {
 	fc, err := s.Repo.GetAllFlashcards()
 	if err != nil {
 		return fc, err

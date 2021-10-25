@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fn := "/Users/kylehaynes/GoProjects/FlashCardsTeamOne/FlashCardsTeamOne/flashcardsDb.json"
+	fn := "flashcardsDb.json"
 	// ext := filepath.Ext(fn)
 	// if ext != ".json" {
 	// 	log.Fatalln("File extension invaild")
