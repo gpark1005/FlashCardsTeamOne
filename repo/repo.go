@@ -258,6 +258,10 @@ func (r Repo) Update(input string, card map[string]interface{}) error {
 			if cId != input {
 				newDb.Flashcards = append(newDb.Flashcards, val)
 			}
+			if cId == input {
+				card["id"] = input
+				newDb.Flashcards = append(newDb.Flashcards, card)
+			}
 
 		}
 	}
