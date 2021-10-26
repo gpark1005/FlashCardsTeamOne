@@ -1,7 +1,7 @@
 package cards
 
 type Info struct {
-	Id          string `json:"id"`
-	Type        string `json:"type"`
-	Information string `json:"information"`
+	Id          string `json:"id" validate:"omitempty,uuid"`
+	Type        string `json:"type" validate:"required"`
+	Information string `json:"information" validate:"required"`
 }

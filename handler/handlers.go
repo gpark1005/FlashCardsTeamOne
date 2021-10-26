@@ -2,9 +2,12 @@ package handler
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
@@ -54,6 +57,16 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
+
+			//Validating that all fields in structs are field
+			validate := validator.New()
+
+			err := validate.Struct(matchCard)
+			if err != nil {
+				fmt.Println(errors.New("all fields must be filled with data"))
+				return
+			}
+
 			err = ih.Svc.PostNewMatching(matchCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -64,6 +77,16 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
+
+			//Validating that all fields in structs are field
+			validate := validator.New()
+
+			err := validate.Struct(multipleCard)
+			if err != nil {
+				fmt.Println(errors.New("all fields must be filled with data"))
+				return
+			}
+
 			err = ih.Svc.PostNewMultiple(multipleCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -74,6 +97,16 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
+
+			//Validating that all fields in structs are field
+			validate := validator.New()
+
+			err := validate.Struct(card)
+			if err != nil {
+				fmt.Println(errors.New("all fields must be filled with data"))
+				return
+			}
+
 			err = ih.Svc.PostNewInfo(card)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -84,6 +117,16 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
+
+			//Validating that all fields in structs are field
+			validate := validator.New()
+
+			err := validate.Struct(qandaCard)
+			if err != nil {
+				fmt.Println(errors.New("all fields must be filled with data"))
+				return
+			}
+
 			err = ih.Svc.PostNewQNA(qandaCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -94,6 +137,16 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
+
+			//Validating that all fields in structs are field
+			validate := validator.New()
+
+			err := validate.Struct(torfCard)
+			if err != nil {
+				fmt.Println(errors.New("all fields must be filled with data"))
+				return
+			}
+
 			err = ih.Svc.PostNewTORF(torfCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
