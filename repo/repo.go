@@ -2,8 +2,8 @@ package repo
 
 import (
 	"encoding/json"
-	"errors"
 	"io/ioutil"
+
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 )
 
@@ -175,7 +175,7 @@ func (r Repo) GetAllFlashcards() (Db, error) {
 }
 
 func (r Repo) GetByType(input string) (DbType, error) {
-	
+
 	flashcards := DbType{}
 	newDb := DbType{}
 
@@ -189,7 +189,6 @@ func (r Repo) GetByType(input string) (DbType, error) {
 		return flashcards, err
 	}
 
-
 	for _, val := range flashcards.Flashcards {
 		if cType, ok := val["type"]; ok {
 			if cType == input {
@@ -199,5 +198,5 @@ func (r Repo) GetByType(input string) (DbType, error) {
 		}
 	}
 
-	return newDb, errors.New("type not found")
+	return newDb, nil
 }
