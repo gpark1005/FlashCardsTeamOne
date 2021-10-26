@@ -13,6 +13,7 @@ type Repo interface {
 	CreateNewQNA(card cards.QNA) error
 	CreateNewTORF(card cards.TrueOrFalse) error
 	GetAllFlashcards() (repo.Db, error)
+	GetByType(input string) (repo.DbType, error)
 }
 
 type Service struct {
@@ -86,4 +87,12 @@ func (s Service) GetAllFlashcards() (repo.Db, error) {
 		return fc, err
 	}
 	return fc, nil
+}
+
+func (s Service) GetByType(input string) (repo.DbType, error) {
+	searchRequest, err := s.Repo.GetByType(input)
+	if err != nil {
+		return searchRequest, err
+	}
+	return searchRequest, err
 }

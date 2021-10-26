@@ -2,13 +2,17 @@ package repo
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
-
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 )
 
 type Db struct {
 	Flashcards []interface{}
+}
+
+type DbType struct {
+	Flashcards []map[string]interface{}
 }
 
 type Repo struct {
@@ -168,4 +172,32 @@ func (r Repo) GetAllFlashcards() (Db, error) {
 		return flashcards, err
 	}
 	return flashcards, nil
+}
+
+func (r Repo) GetByType(input string) (DbType, error) {
+	
+	flashcards := DbType{}
+	newDb := DbType{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return flashcards, err
+	}
+
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return flashcards, err
+	}
+
+
+	for _, val := range flashcards.Flashcards {
+		if cType, ok := val["type"]; ok {
+			if cType == input {
+				newDb.Flashcards = append(newDb.Flashcards, val)
+			}
+
+		}
+	}
+
+	return newDb, errors.New("type not found")
 }

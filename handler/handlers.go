@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-
+	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
 )
@@ -16,6 +16,7 @@ type Service interface {
 	PostNewQNA(card cards.QNA) error
 	PostNewTORF(card cards.TrueOrFalse) error
 	GetAllFlashcards() (repo.Db, error)
+	GetByType(input string) (repo.DbType, error)
 }
 
 type InfoHandler struct {
@@ -107,14 +108,40 @@ func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Reques
 	myDb, err := ih.Svc.GetAllFlashcards()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	db, err := json.MarshalIndent(myDb, "", " ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(db)
+}
+
+func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["type"]
+
+	getType, err := ih.Svc.GetByType(id)
+	if err != nil {
+		switch err.Error() {
+		case "type not found":
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+	}
+
+	flashcard, err := json.MarshalIndent(getType, "", "		")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(flashcard)
 }
