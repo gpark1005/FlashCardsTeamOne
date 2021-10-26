@@ -1,9 +1,10 @@
 package handler
 
 import (
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func ConfigureRouter(handler InfoHandler) *mux.Router {
@@ -12,6 +13,8 @@ func ConfigureRouter(handler InfoHandler) *mux.Router {
 	r.HandleFunc("/flashcards", handler.PostFlashcardHandler).Methods("POST")
 	r.HandleFunc("/flashcards", handler.GetFlashcardsHandler).Methods("GET")
 	r.HandleFunc("/flashcards/{type}", handler.GetByTypeHandler).Methods("GET")
+	r.HandleFunc("/flashcards/{id}", handler.DeleteByIdHandler).Methods("DELETE")
+	r.HandleFunc("/flashcards/{id}", handler.UpdateByIdHandler).Methods("PUT")
 
 	return r
 }

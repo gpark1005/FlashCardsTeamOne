@@ -200,3 +200,77 @@ func (r Repo) GetByType(input string) (DbType, error) {
 
 	return newDb, nil
 }
+
+func (r Repo) Delete(input string) error {
+
+	flashcards := DbType{}
+	newDb := DbType{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return err
+	}
+
+	for _, val := range flashcards.Flashcards {
+		if cId, ok := val["id"]; ok {
+			if cId != input {
+				newDb.Flashcards = append(newDb.Flashcards, val)
+			}
+
+		}
+	}
+
+	bytes, err := json.MarshalIndent(newDb, "", "	")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(r.Filename, bytes, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r Repo) Update(input string, card map[string]interface{}) error {
+
+	flashcards := DbType{}
+	newDb := DbType{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return err
+	}
+
+	for _, val := range flashcards.Flashcards {
+		if cId, ok := val["id"]; ok {
+			if cId != input {
+				newDb.Flashcards = append(newDb.Flashcards, val)
+			}
+
+		}
+	}
+
+	bytes, err := json.MarshalIndent(newDb, "", "	")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(r.Filename, bytes, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

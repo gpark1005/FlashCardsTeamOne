@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
@@ -17,6 +18,8 @@ type Service interface {
 	PostNewTORF(card cards.TrueOrFalse) error
 	GetAllFlashcards() (repo.Db, error)
 	GetByType(input string) (repo.DbType, error)
+	DeletebyId(input string) error
+	UpdatebyId(input string, card map[string]interface{}) error
 }
 
 type InfoHandler struct {
@@ -144,4 +147,36 @@ func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(flashcard)
+}
+
+func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	err := ih.Svc.DeletebyId(id)
+	if err != nil {
+		return
+	}
+
+}
+
+func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	err = json.Unmarshal(data, &CardType)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	err = ih.Svc.UpdatebyId(id, CardType)
+	if err != nil {
+		return
+	}
+
 }

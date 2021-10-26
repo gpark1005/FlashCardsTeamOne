@@ -14,6 +14,8 @@ type Repo interface {
 	CreateNewTORF(card cards.TrueOrFalse) error
 	GetAllFlashcards() (repo.Db, error)
 	GetByType(input string) (repo.DbType, error)
+	Delete(input string) error
+	Update(input string, card map[string]interface{}) error
 }
 
 type Service struct {
@@ -94,5 +96,21 @@ func (s Service) GetByType(input string) (repo.DbType, error) {
 	if err != nil {
 		return searchRequest, err
 	}
-	return searchRequest, err
+	return searchRequest, nil
+}
+
+func (s Service) DeletebyId(input string) error {
+	err := s.Repo.Delete(input)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdatebyId(input string, card map[string]interface{}) error {
+	err := s.Repo.Update(input, card)
+	if err != nil {
+		return err
+	}
+	return nil
 }

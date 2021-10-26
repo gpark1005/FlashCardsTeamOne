@@ -1,16 +1,6 @@
 {
 	"Flashcards": [
 		{
-			"id": "4dcd16bf-2820-403f-b898-fe17fc4e6f97",
-			"information": "Functions: A function has a name, a list of comma-separated input parameters along with their types, the result type(s), and a body. The input parameters and return type(s) are optional for a function. A function can be declared without any input and output. ",
-			"type": "info"
-		},
-		{
-			"id": "b99ad45e-015a-4b08-93e5-683d7d0b96c7",
-			"information": "test after refactor",
-			"type": "info"
-		},
-		{
 			"id": "e6d22eb3-b5bc-4dad-82da-8e92926c9be1",
 			"information": "A unit test is a way of testing a unit - the smallest piece of code that can be logically isolated in a system. In most programming languages, that is a function, a subroutine, a method or property.",
 			"type": "info"
@@ -93,10 +83,10 @@
 			"type": "matching"
 		},
 		{
+			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed.",
 			"id": "97eb486b-78cb-423a-8670-e0b769e8aa3e",
-			"type": "qanda",
 			"question": "What is Go?",
-			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed."
+			"type": "qanda"
 		}
 	]
 }
