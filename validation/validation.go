@@ -9,11 +9,13 @@ import (
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 )
 
-
+type dbVal struct {
+	Flashcards []map[string]interface{}
+}
 
 func ValidateMatching(card cards.Matching, filename string) error {
 
-	Db := cards.Matching{}
+	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -25,9 +27,15 @@ func ValidateMatching(card cards.Matching, filename string) error {
 		return err
 	}
 
-	eq := reflect.DeepEqual(card.Questions, Db.Questions)
-	if eq {
-		return errors.New("this card already exists")
+	for _, val := range Db.Flashcards {
+		if cQ, ok := val["questions"]; ok {
+			eq := reflect.DeepEqual(card.Questions, cQ)
+			if eq {
+				return errors.New("this card already exists")
+			}
+		}
+
 	}
+
 	return nil
 }
