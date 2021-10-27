@@ -3,8 +3,9 @@ package repo
 import (
 	"encoding/json"
 	"io/ioutil"
-	"github.com/gpark1005/FlashCardsTeamOne/validation"
+
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
+	"github.com/gpark1005/FlashCardsTeamOne/validation"
 )
 
 type Db struct {
@@ -66,6 +67,9 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 	}
 
 	err = validation.ValidateMatching(card, r.Filename)
+	if err != nil {
+		return err
+	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
@@ -90,6 +94,11 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 	}
 
 	err = json.Unmarshal(output, &newcard)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateMultiple(card, r.Filename)
 	if err != nil {
 		return err
 	}
