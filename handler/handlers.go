@@ -41,12 +41,12 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w,"unable to read data" , http.StatusBadRequest)
 	}
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error decoding response object", http.StatusBadRequest)
 	}
 
 	if cType, ok := CardType["type"]; ok {
@@ -55,7 +55,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			matchCard := cards.Matching{}
 			err = json.Unmarshal(data, &matchCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w,"error decoding response object", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -75,7 +75,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			multipleCard := cards.MultipleChoice{}
 			err = json.Unmarshal(data, &multipleCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error decoding response object", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -89,13 +89,13 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewMultiple(multipleCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error posting", http.StatusBadRequest)
 			}
 		case "info":
 			card := cards.Info{}
 			err = json.Unmarshal(data, &card)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error decoding response object", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -109,13 +109,13 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewInfo(card)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error posting", http.StatusBadRequest)
 			}
 		case "qanda":
 			qandaCard := cards.QNA{}
 			err = json.Unmarshal(data, &qandaCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error decoding response object", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -129,13 +129,13 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewQNA(qandaCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error posting", http.StatusBadRequest)
 			}
 		case "torf":
 			torfCard := cards.TrueOrFalse{}
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error decoding response object", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -149,10 +149,10 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewTORF(torfCard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				http.Error(w, "error posting", http.StatusBadRequest)
 			}
 		default:
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			http.Error(w, "invaild type", http.StatusBadRequest)
 		}
 
 	}
@@ -163,13 +163,13 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Request) {
 	myDb, err := ih.Svc.GetAllFlashcards()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error getting flashcards", http.StatusBadRequest)
 		return
 	}
 
 	db, err := json.MarshalIndent(myDb, "", " ")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error encoding response object", http.StatusBadRequest)
 		return
 	}
 
@@ -193,7 +193,7 @@ func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 
 	flashcard, err := json.MarshalIndent(getType, "", "		")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error encoding response object", http.StatusBadRequest)
 		return
 	}
 
@@ -208,6 +208,7 @@ func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 	err := ih.Svc.DeletebyId(id)
 	if err != nil {
+		http.Error(w, "error deleting", http.StatusBadRequest)
 		return
 	}
 
@@ -219,17 +220,19 @@ func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error reading data", http.StatusBadRequest)
 	}
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "error decoding response object", http.StatusBadRequest)
 	}
 
 	err = ih.Svc.UpdatebyId(id, CardType)
 	if err != nil {
-		return
+		http.Error(w, "error updating", http.StatusBadRequest)
+		return 
+		
 	}
 
 }

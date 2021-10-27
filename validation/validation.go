@@ -17,12 +17,12 @@ func ValidateMatching(card cards.Matching, filename string) error {
 
 	compare, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return err
+		return errors.New("error reading file")
 	}
 
 	err = json.Unmarshal(compare, &Db)
 	if err != nil {
-		return err
+		return errors.New("error decoding")
 	}
 
 	eq := reflect.DeepEqual(card.Questions, Db.Questions)
