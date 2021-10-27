@@ -1,11 +1,12 @@
 package validation
 
 import (
-	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"reflect"
-	"errors"
+
+	"github.com/gpark1005/FlashCardsTeamOne/cards"
 )
 
 
