@@ -98,6 +98,11 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 		return err
 	}
 
+	err = validation.ValidateMultiple(card, r.Filename)
+	if err != nil {
+		return err
+	}
+
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
