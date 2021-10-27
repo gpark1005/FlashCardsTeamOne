@@ -87,6 +87,21 @@
 			"id": "97eb486b-78cb-423a-8670-e0b769e8aa3e",
 			"question": "What is Go?",
 			"type": "qanda"
+		},
+		{
+			"id": "daf78e27-3030-4626-80fd-7240dc7e2f90",
+			"information": "test for the class",
+			"type": "info"
+		},
+		{
+			"id": "986d3456-bf5d-4b46-8ee4-eafe3676ffd3",
+			"information": "",
+			"type": "info"
+		},
+		{
+			"id": "cecdf1ea-41cc-49a7-88ec-1685e116347c",
+			"type": "info",
+			"information": ""
 		}
 	]
 }

@@ -3,7 +3,7 @@ package repo
 import (
 	"encoding/json"
 	"io/ioutil"
-
+	"github.com/gpark1005/FlashCardsTeamOne/validation"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 )
 
@@ -64,6 +64,8 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 	if err != nil {
 		return err
 	}
+
+	err = validation.ValidateMatching(card, r.Filename)
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
