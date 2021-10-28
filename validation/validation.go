@@ -115,6 +115,13 @@ func ValidateTorf(card cards.TrueOrFalse, filename string) error {
 			}
 		}
 	}
+return nil
+}
+
+func ValidateCategoryMatching(card cards.Matching) error{
+	if card.Category != "Golang" {
+		return errors.New("category must be Golang")
+	}
 	return nil
 }
 
@@ -137,6 +144,21 @@ func ValidateQNA(card cards.QNA, filename string) error {
 				return errors.New("this card already exists")
 			}
 		}
+	}
+	return nil
+}
+
+func ValidateCategoryMultiple(card cards.MultipleChoice) error{
+	if card.Category != "Golang" {
+		return errors.New("category must be Golang")
+	}
+	return nil
+}
+
+
+func ValidateCategoryTORF(card cards.TrueOrFalse) error{
+	if card.Category != "Golang" {
+		return errors.New("category must be Golang")
 	}
 	return nil
 }

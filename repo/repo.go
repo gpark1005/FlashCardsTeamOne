@@ -76,6 +76,11 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 		return err
 	}
 
+	err = validation.ValidateCategoryMatching(card)
+	if err != nil {
+		return err
+	}
+
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
@@ -104,6 +109,11 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 	}
 
 	err = validation.ValidateMultiple(card, r.Filename)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateCategoryMultiple(card)
 	if err != nil {
 		return err
 	}
@@ -168,6 +178,11 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 	}
 
 	err = validation.ValidateTorf(card, r.Filename)
+	if err != nil {
+		return err
+	}
+	
+	err = validation.ValidateCategoryTORF(card)
 	if err != nil {
 		return err
 	}
