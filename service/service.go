@@ -17,6 +17,8 @@ type Repo interface {
 	GetByType(input string) (repo.DbType, error)
 	Delete(input string) error
 	Update(input string, card map[string]interface{}) error
+	GetByCategory(input string) (repo.DbType, error)
+	GetById(input string) (repo.DbType, error)
 }
 
 type Service struct {
@@ -114,4 +116,20 @@ func (s Service) UpdatebyId(input string, card map[string]interface{}) error {
 		return err
 	}
 	return nil
+}
+
+func (s Service) GetByCategory(input string) (repo.DbType, error) {
+	searchRequest, err := s.Repo.GetByCategory(input)
+	if err != nil {
+		return searchRequest, err
+	}
+	return searchRequest, nil
+}
+
+func (s Service) GetById(input string) (repo.DbType, error) {
+	searchRequest, err := s.Repo.GetById(input)
+	if err != nil {
+		return searchRequest, err
+	}
+	return searchRequest, nil
 }

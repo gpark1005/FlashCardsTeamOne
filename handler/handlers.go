@@ -21,6 +21,8 @@ type Service interface {
 	GetByType(input string) (repo.DbType, error)
 	DeletebyId(input string) error
 	UpdatebyId(input string, card map[string]interface{}) error
+	GetByCategory(input string) (repo.DbType, error)
+	GetById(input string) (repo.DbType, error)
 }
 
 type InfoHandler struct {
@@ -183,14 +185,12 @@ func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 		switch err.Error() {
 		case "type not found":
 			http.Error(w, err.Error(), http.StatusNotFound)
-			return
 		}
 	}
 
 	flashcard, err := json.MarshalIndent(getType, "", "	")
 	if err != nil {
 		http.Error(w, "unable to encode database", http.StatusBadRequest)
-		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -205,7 +205,6 @@ func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) 
 	err := ih.Svc.DeletebyId(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
 	}
 
 }
@@ -231,4 +230,49 @@ func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) 
 		
 	}
 
+}
+
+func (ih InfoHandler) GetByCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	category := vars["category"]
+
+	getCategory, err := ih.Svc.GetByCategory(category)
+	if err != nil {
+		switch err.Error() {
+		case "category not found":
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+	}
+
+	flashcard, err := json.MarshalIndent(getCategory, "", "	")
+	if err != nil {
+		http.Error(w, "unable to encode database", http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(flashcard)
+}
+
+
+func (ih InfoHandler) GetByIdHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	getId, err := ih.Svc.GetById(id)
+	if err != nil {
+		switch err.Error() {
+		case "id not found":
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+	}
+
+	flashcard, err := json.MarshalIndent(getId, "", "	")
+	if err != nil {
+		http.Error(w, "unable to encode database", http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(flashcard)
 }

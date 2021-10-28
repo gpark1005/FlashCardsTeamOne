@@ -320,3 +320,57 @@ func (r Repo) Update(input string, card map[string]interface{}) error {
 
 	return nil
 }
+
+func (r Repo) GetByCategory(input string) (DbType, error) {
+
+	flashcards := DbType{}
+	newDb := DbType{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return flashcards, errors.New("unable to read file")
+	}
+
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return flashcards, errors.New("unable to decode database")
+	}
+
+	for _, val := range flashcards.Flashcards {
+		if cCategory, ok := val["category"]; ok {
+			if cCategory == input {
+				newDb.Flashcards = append(newDb.Flashcards, val)
+			}
+
+		}
+	}
+
+	return newDb, nil
+}
+
+func (r Repo) GetById(input string) (DbType, error) {
+
+	flashcards := DbType{}
+	newDb := DbType{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return flashcards, errors.New("unable to read file")
+	}
+
+	err = json.Unmarshal(file, &flashcards)
+	if err != nil {
+		return flashcards, errors.New("unable to decode database")
+	}
+
+	for _, val := range flashcards.Flashcards {
+		if cId, ok := val["id"]; ok {
+			if cId == input {
+				newDb.Flashcards = append(newDb.Flashcards, val)
+			}
+
+		}
+	}
+
+	return newDb, nil
+}

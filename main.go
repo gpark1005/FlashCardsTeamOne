@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fn := ""
+	fn := "flashcardsDb.json"
 	// ext := filepath.Ext(fn)
 	// if ext != ".json" {
 	// 	log.Fatalln("File extension invaild")
