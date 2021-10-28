@@ -21,12 +21,12 @@ func ValidateMatching(card cards.Matching, filename string) error {
 
 	compare, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(compare, &Db)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	/* This loop with the help of the if ok statment, allows us to access the questions map stored on

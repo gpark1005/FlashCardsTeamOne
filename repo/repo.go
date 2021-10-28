@@ -3,6 +3,7 @@ package repo
 import (
 	"encoding/json"
 	"io/ioutil"
+	"errors"
 
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/validation"
@@ -31,29 +32,29 @@ func (r Repo) CreateNewInfo(card cards.Info) error {
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(output, &newCardInfo)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	err = validation.ValidateOnlyInfo(card, r.Filename)
 	if err != nil {
-		return err
+		return errors.New("all fields require data")
 	}
 
 	newCardInfo.Flashcards = append(newCardInfo.Flashcards, card)
 
 	input, err := json.MarshalIndent(newCardInfo, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, input, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 	return nil
 }
@@ -63,34 +64,34 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	err = validation.ValidateMatching(card, r.Filename)
 	if err != nil {
-		return err
+		return errors.New("all fields require data")
 	}
 
 	err = validation.ValidateCategoryMatching(card)
 	if err != nil {
-		return err
+		return errors.New("category required")
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, input, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 	return nil
 }
@@ -100,34 +101,34 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	err = validation.ValidateMultiple(card, r.Filename)
 	if err != nil {
-		return err
+		return errors.New("all fields require data")
 	}
 
 	err = validation.ValidateCategoryMultiple(card)
 	if err != nil {
-		return err
+		return errors.New("category required")
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, input, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 	return nil
 }
@@ -137,29 +138,29 @@ func (r Repo) CreateNewQNA(card cards.QNA) error {
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	err = validation.ValidateQNA(card, r.Filename)
 	if err != nil {
-		return err
+		return errors.New("all fields require data")
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, input, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 	return nil
 }
@@ -169,34 +170,34 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 
 	output, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	err = validation.ValidateTorf(card, r.Filename)
 	if err != nil {
-		return err
+		return errors.New("all fields require data")
 	}
-	
+
 	err = validation.ValidateCategoryTORF(card)
 	if err != nil {
-		return err
+		return errors.New("category required")
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, input, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 	return nil
 }
@@ -204,13 +205,13 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 func (r Repo) GetAllFlashcards() (Db, error) {
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return Db{}, err
+		return Db{}, errors.New("unable to read file")
 	}
 
 	flashcards := Db{}
 	err = json.Unmarshal(file, &flashcards)
 	if err != nil {
-		return flashcards, err
+		return flashcards, errors.New("unable to decode database")
 	}
 	return flashcards, nil
 }
@@ -222,12 +223,12 @@ func (r Repo) GetByType(input string) (DbType, error) {
 
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return flashcards, err
+		return flashcards, errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(file, &flashcards)
 	if err != nil {
-		return flashcards, err
+		return flashcards, errors.New("unable to decode database")
 	}
 
 	for _, val := range flashcards.Flashcards {
@@ -249,12 +250,12 @@ func (r Repo) Delete(input string) error {
 
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(file, &flashcards)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	for _, val := range flashcards.Flashcards {
@@ -268,12 +269,12 @@ func (r Repo) Delete(input string) error {
 
 	bytes, err := json.MarshalIndent(newDb, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, bytes, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 
 	return nil
@@ -286,12 +287,12 @@ func (r Repo) Update(input string, card map[string]interface{}) error {
 
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		return err
+		return errors.New("unable to read file")
 	}
 
 	err = json.Unmarshal(file, &flashcards)
 	if err != nil {
-		return err
+		return errors.New("unable to decode database")
 	}
 
 	for _, val := range flashcards.Flashcards {
@@ -309,12 +310,12 @@ func (r Repo) Update(input string, card map[string]interface{}) error {
 
 	bytes, err := json.MarshalIndent(newDb, "", "	")
 	if err != nil {
-		return err
+		return errors.New("unable to encode database")
 	}
 
 	err = ioutil.WriteFile(r.Filename, bytes, 0644)
 	if err != nil {
-		return err
+		return errors.New("unable to write to file")
 	}
 
 	return nil

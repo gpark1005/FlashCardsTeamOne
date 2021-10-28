@@ -100,7 +100,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err := validate.Struct(card)
 			if err != nil {
 				http.Error(w,"all fields require data", http.StatusBadRequest)
-				return
+				
 			}
 
 			err = ih.Svc.PostNewInfo(card)
@@ -132,6 +132,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
 				http.Error(w,"unable to decode database", http.StatusUnprocessableEntity)
+			
 			}
 
 			//Validating that all fields in structs are field
@@ -140,6 +141,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err := validate.Struct(torfCard)
 			if err != nil {
 				http.Error(w,"all fields require data", http.StatusBadRequest)
+				
 			}
 
 			err = ih.Svc.PostNewTORF(torfCard)
