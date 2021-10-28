@@ -109,7 +109,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewInfo(card)
 			if err != nil {
-				http.Error(w, "error posting", http.StatusBadRequest)
+				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 		case "qanda":
 			qandaCard := cards.QNA{}
@@ -129,7 +129,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewQNA(qandaCard)
 			if err != nil {
-				http.Error(w, "error posting", http.StatusBadRequest)
+				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 		case "torf":
 			torfCard := cards.TrueOrFalse{}
@@ -149,7 +149,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err = ih.Svc.PostNewTORF(torfCard)
 			if err != nil {
-				http.Error(w, "error posting", http.StatusBadRequest)
+				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 		default:
 			http.Error(w, "invaild type", http.StatusBadRequest)

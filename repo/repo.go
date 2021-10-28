@@ -39,6 +39,11 @@ func (r Repo) CreateNewInfo(card cards.Info) error {
 		return err
 	}
 
+	err = validation.ValidateOnlyInfo(card, r.Filename)
+	if err != nil {
+		return err
+	}
+
 	newCardInfo.Flashcards = append(newCardInfo.Flashcards, card)
 
 	input, err := json.MarshalIndent(newCardInfo, "", "	")
@@ -130,6 +135,11 @@ func (r Repo) CreateNewQNA(card cards.QNA) error {
 		return err
 	}
 
+	err = validation.ValidateQNA(card, r.Filename)
+	if err != nil {
+		return err
+	}
+
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
@@ -153,6 +163,11 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 	}
 
 	err = json.Unmarshal(output, &newcard)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateTorf(card, r.Filename)
 	if err != nil {
 		return err
 	}

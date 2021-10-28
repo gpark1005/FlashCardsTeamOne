@@ -39,9 +39,7 @@ func ValidateMatching(card cards.Matching, filename string) error {
 				return errors.New("this card already exists")
 			}
 		}
-
 	}
-
 	return nil
 }
 
@@ -70,8 +68,75 @@ func ValidateMultiple(card cards.MultipleChoice, filename string) error {
 				return errors.New("this card already exists")
 			}
 		}
+	}
+	return nil
+}
 
+func ValidateOnlyInfo(card cards.Info, filename string) error {
+	Db := dbVal{}
+
+	compare, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return errors.New("error reading file")
 	}
 
+	err = json.Unmarshal(compare, &Db)
+	if err != nil {
+		return errors.New("error decoding")
+	}
+
+	for _, val := range Db.Flashcards {
+		if cInfo, ok := val["information"]; ok {
+			if cInfo == card.Information {
+				return errors.New("this card already exists")
+			}
+		}
+	}
+	return nil
+}
+
+func ValidateTorf(card cards.TrueOrFalse, filename string) error {
+	Db := dbVal{}
+
+	compare, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return errors.New("error reading file")
+	}
+
+	err = json.Unmarshal(compare, &Db)
+	if err != nil {
+		return errors.New("error decoding")
+	}
+
+	for _, val := range Db.Flashcards {
+		if cQ, ok := val["question"]; ok {
+			if cQ == card.Question {
+				return errors.New("this card already exists")
+			}
+		}
+	}
+	return nil
+}
+
+func ValidateQNA(card cards.QNA, filename string) error {
+	Db := dbVal{}
+
+	compare, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return errors.New("error reading file")
+	}
+
+	err = json.Unmarshal(compare, &Db)
+	if err != nil {
+		return errors.New("error decoding")
+	}
+
+	for _, val := range Db.Flashcards {
+		if cQ, ok := val["question"]; ok {
+			if cQ == card.Question {
+				return errors.New("this card already exists")
+			}
+		}
+	}
 	return nil
 }
