@@ -2,8 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -41,12 +39,12 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w,"unable to read data" , http.StatusBadRequest)
+		http.Error(w,"unable to access database" , http.StatusUnprocessableEntity)
 	}
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, "error decoding response object", http.StatusBadRequest)
+		http.Error(w, "unable to decode database", http.StatusUnprocessableEntity)
 	}
 
 	if cType, ok := CardType["type"]; ok {
@@ -55,7 +53,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			matchCard := cards.Matching{}
 			err = json.Unmarshal(data, &matchCard)
 			if err != nil {
-				http.Error(w,"error decoding response object", http.StatusBadRequest)
+				http.Error(w,"unable to decode database", http.StatusUnprocessableEntity)
 			}
 
 			//Validating that all fields in structs are field
@@ -63,8 +61,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err := validate.Struct(matchCard)
 			if err != nil {
-				fmt.Println(errors.New("all fields must be filled with data"))
-				return
+				http.Error(w,"all fields require data", http.StatusBadRequest)
 			}
 
 			err = ih.Svc.PostNewMatching(matchCard)
@@ -75,7 +72,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			multipleCard := cards.MultipleChoice{}
 			err = json.Unmarshal(data, &multipleCard)
 			if err != nil {
-				http.Error(w, "error decoding response object", http.StatusBadRequest)
+				http.Error(w, "unable to decode database", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -83,19 +80,18 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err := validate.Struct(multipleCard)
 			if err != nil {
-				fmt.Println(errors.New("all fields must be filled with data"))
-				return
+				http.Error(w,"all fields require data", http.StatusBadRequest)
 			}
 
 			err = ih.Svc.PostNewMultiple(multipleCard)
 			if err != nil {
-				http.Error(w, "error posting", http.StatusBadRequest)
+				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 		case "info":
 			card := cards.Info{}
 			err = json.Unmarshal(data, &card)
 			if err != nil {
-				http.Error(w, "error decoding response object", http.StatusBadRequest)
+				http.Error(w,"unable to decode database", http.StatusUnprocessableEntity)
 			}
 
 			//Validating that all fields in structs are field
@@ -103,7 +99,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err := validate.Struct(card)
 			if err != nil {
-				fmt.Println(errors.New("all fields must be filled with data"))
+				http.Error(w,"all fields require data", http.StatusBadRequest)
 				return
 			}
 
@@ -115,7 +111,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			qandaCard := cards.QNA{}
 			err = json.Unmarshal(data, &qandaCard)
 			if err != nil {
-				http.Error(w, "error decoding response object", http.StatusBadRequest)
+				http.Error(w, "unable to decode database", http.StatusBadRequest)
 			}
 
 			//Validating that all fields in structs are field
@@ -123,8 +119,8 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err := validate.Struct(qandaCard)
 			if err != nil {
-				fmt.Println(errors.New("all fields must be filled with data"))
-				return
+				http.Error(w,"all fields require data", http.StatusBadRequest)
+				
 			}
 
 			err = ih.Svc.PostNewQNA(qandaCard)
@@ -135,7 +131,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			torfCard := cards.TrueOrFalse{}
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
-				http.Error(w, "error decoding response object", http.StatusBadRequest)
+				http.Error(w,"unable to decode database", http.StatusUnprocessableEntity)
 			}
 
 			//Validating that all fields in structs are field
@@ -143,8 +139,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 			err := validate.Struct(torfCard)
 			if err != nil {
-				fmt.Println(errors.New("all fields must be filled with data"))
-				return
+				http.Error(w,"all fields require data", http.StatusBadRequest)
 			}
 
 			err = ih.Svc.PostNewTORF(torfCard)
@@ -163,14 +158,13 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Request) {
 	myDb, err := ih.Svc.GetAllFlashcards()
 	if err != nil {
-		http.Error(w, "error getting flashcards", http.StatusBadRequest)
-		return
+		http.Error(w,"unable to decode database", http.StatusUnprocessableEntity)
 	}
 
 	db, err := json.MarshalIndent(myDb, "", " ")
 	if err != nil {
-		http.Error(w, "error encoding response object", http.StatusBadRequest)
-		return
+		http.Error(w, "unable to encode database", http.StatusBadRequest)
+
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -191,9 +185,9 @@ func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	flashcard, err := json.MarshalIndent(getType, "", "		")
+	flashcard, err := json.MarshalIndent(getType, "", "	")
 	if err != nil {
-		http.Error(w, "error encoding response object", http.StatusBadRequest)
+		http.Error(w, "unable to encode database", http.StatusBadRequest)
 		return
 	}
 
@@ -208,7 +202,7 @@ func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 	err := ih.Svc.DeletebyId(id)
 	if err != nil {
-		http.Error(w, "error deleting", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -220,17 +214,17 @@ func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "error reading data", http.StatusBadRequest)
+		http.Error(w,"unable to access database" , http.StatusUnprocessableEntity)
 	}
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, "error decoding response object", http.StatusBadRequest)
+		http.Error(w, "unable to decode database", http.StatusUnprocessableEntity)
 	}
 
 	err = ih.Svc.UpdatebyId(id, CardType)
 	if err != nil {
-		http.Error(w, "error updating", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return 
 		
 	}
