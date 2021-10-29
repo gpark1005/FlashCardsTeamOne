@@ -2,8 +2,10 @@ package repo
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"errors"
+	"fmt"
+	"io/ioutil"
+	"reflect"
 
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/validation"
@@ -238,6 +240,14 @@ func (r Repo) GetByType(input string) (DbType, error) {
 			}
 
 		}
+	}
+
+	mt := DbType{}
+
+	eq := reflect.DeepEqual(mt.Flashcards, newDb.Flashcards)
+	if eq {
+		fmt.Println("hello")
+		return newDb, errors.New("could not find that type in the data base")
 	}
 
 	return newDb, nil
