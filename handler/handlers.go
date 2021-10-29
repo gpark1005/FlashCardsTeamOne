@@ -235,10 +235,7 @@ func (ih InfoHandler) GetByCategoryHandler(w http.ResponseWriter, r *http.Reques
 
 	getCategory, err := ih.Svc.GetByCategory(category)
 	if err != nil {
-		switch err.Error() {
-		case "category not found":
-			http.Error(w, err.Error(), http.StatusNotFound)
-		}
+		http.Error(w, err.Error(), 404)
 	}
 
 	flashcard, err := json.MarshalIndent(getCategory, "", "	")
@@ -257,10 +254,7 @@ func (ih InfoHandler) GetByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 	getId, err := ih.Svc.GetById(id)
 	if err != nil {
-		switch err.Error() {
-		case "id not found":
-			http.Error(w, err.Error(), http.StatusNotFound)
-		}
+		http.Error(w, err.Error(), 404)
 	}
 
 	flashcard, err := json.MarshalIndent(getId, "", "	")

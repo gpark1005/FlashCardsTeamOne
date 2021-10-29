@@ -3,7 +3,6 @@ package repo
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"reflect"
 
@@ -246,7 +245,6 @@ func (r Repo) GetByType(input string) (DbType, error) {
 
 	eq := reflect.DeepEqual(mt.Flashcards, newDb.Flashcards)
 	if eq {
-		fmt.Println("hello")
 		return newDb, errors.New("could not find that type in the data base")
 	}
 
@@ -354,6 +352,12 @@ func (r Repo) GetByCategory(input string) (DbType, error) {
 
 		}
 	}
+	mt := DbType{}
+
+	eq := reflect.DeepEqual(mt.Flashcards, newDb.Flashcards)
+	if eq {
+		return newDb, errors.New("could not find that category in the data base")
+	}
 
 	return newDb, nil
 }
@@ -380,6 +384,12 @@ func (r Repo) GetById(input string) (DbType, error) {
 			}
 
 		}
+	}
+	mt := DbType{}
+
+	eq := reflect.DeepEqual(mt.Flashcards, newDb.Flashcards)
+	if eq {
+		return newDb, errors.New("could not find that id in the data base")
 	}
 
 	return newDb, nil
