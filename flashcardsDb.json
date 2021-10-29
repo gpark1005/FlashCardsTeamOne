@@ -1,275 +1,66 @@
 {
 	"Flashcards": [
 		{
-			"id": "e6d22eb3-b5bc-4dad-82da-8e92926c9be1",
-			"information": "A unit test is a way of testing a unit - the smallest piece of code that can be logically isolated in a system. In most programming languages, that is a function, a subroutine, a method or property.",
-			"type": "info"
-		},
-		{
-			"id": "89fd0288-cb55-4646-8be8-e3e7f13bbce3",
-			"information": "Git is software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development.",
-			"type": "info"
-		},
-		{
-			"answers": {
-				"a": "2",
-				"b": "4",
-				"c": "7",
-				"d": "1"
-			},
+			"answer": "false",
 			"category": "Golang",
-			"id": "4887909b-2ea9-486e-9f82-1fb3050b3467",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions A",
-				"B": "Questions B",
-				"C": "Questions C",
-				"D": "Questions D"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": 4,
-			"category": "Golang",
-			"id": "76c37500-447e-4104-808d-6a4f3485a6b8",
-			"options": {
-				"1": "Compilation time is fast.",
-				"2": "Support for Interfaces and Type embedding.",
-				"3": "Concurrency support",
-				"4": "All of the above"
-			},
-			"question": "What are the benefits of using Go programming?",
-			"type": "multiple"
-		},
-		{
-			"answer": "False",
-			"category": "Golang",
-			"id": "7f08a8fb-7601-4056-9c75-25a2040c2c7a",
+			"id": "24495bf3-3ec3-46da-b1cf-f2271d89e583",
 			"question": "Does Go support pointer arithmetics?",
 			"type": "torf"
 		},
 		{
-			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed.",
-			"id": "9ca1fa8a-80b2-45da-8d6e-5b68ad6f5cd6",
-			"question": "What is Go?",
-			"type": "qanda"
-		},
-		{
-			"answers": {
-				"a": "test",
-				"b": "test",
-				"c": "test",
-				"d": "test"
-			},
+			"answer": "A user-defined type that allows to group/combine items of possibly different types into a single type",
 			"category": "Golang",
-			"id": "1712f120-a3ff-4ace-bc0c-61c94fd0d544",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions A",
-				"B": "Questions B",
-				"C": "Questions C",
-				"D": "Questions D"
-			},
-			"type": "matching"
-		},
-		{
-			"answer": "Go is a general purpose language designed with systems programming in mind.It was initially developed at Google in year 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. It is strongly and statically typed.",
-			"id": "97eb486b-78cb-423a-8670-e0b769e8aa3e",
-			"question": "What is Go?",
+			"id": "e9154afb-c868-455f-883b-54788e92c627",
+			"question": "What is a struct?",
 			"type": "qanda"
 		},
 		{
-			"id": "daf78e27-3030-4626-80fd-7240dc7e2f90",
-			"information": "test for the class",
+			"category": "Golang",
+			"id": "f3a4ae13-ae0b-4f01-8f5e-0b739b19a440",
+			"information": "A struct is a user-defined type that allows to group/combine items of possibly different types into a single type",
 			"type": "info"
 		},
 		{
-			"id": "986d3456-bf5d-4b46-8ee4-eafe3676ffd3",
+			"category": "Golang",
+			"id": "604980ea-263e-4d74-914c-daf6b22d728a",
 			"information": "",
 			"type": "info"
 		},
 		{
-			"id": "cecdf1ea-41cc-49a7-88ec-1685e116347c",
-			"information": "",
-			"type": "info"
+			"answers": 2,
+			"category": "Golang",
+			"id": "2eaa7e04-1b1d-4183-b479-1007cd8aadad",
+			"options": {
+				"1": "Answer 1",
+				"2": "A method is a function with a special receiver argument. The receiver appears in its own argument list between the func keyword and the method name.",
+				"3": "Answer 3",
+				"4": "Answer 4"
+			},
+			"question": "What is a method",
+			"type": "multiple"
 		},
 		{
 			"answers": {
-				"a": "tgbb",
-				"b": "gfbfg",
-				"c": "should not add",
-				"d": "bye"
+				"a": "2",
+				"b": "1",
+				"c": "4",
+				"d": "3"
 			},
 			"category": "Golang",
-			"id": "9dbb54af-d00b-4d63-b12d-2b569a9bb8fd",
+			"id": "ed3f906f-fa9b-493b-b97b-513a329ba32b",
 			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
+				"1": "Answer 1",
+				"2": "Answer 2",
+				"3": "Answer 3",
+				"4": "Answer 4"
 			},
 			"questions": {
-				"A": "Questions ",
-				"B": "Questions 78",
-				"C": "Questions C",
-				"D": "Questions D"
+				"A": "Question A",
+				"B": "Question B",
+				"C": "Question C",
+				"D": "Question D"
 			},
 			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "tgbb",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "Golang",
-			"id": "64fd448f-d06c-4835-ac7e-baace38c336d",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions ",
-				"B": "Questions 78",
-				"C": "Questions f",
-				"D": "Questions D"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "tgbb",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "Golan",
-			"id": "2b071eec-04c2-44b8-bf39-26c2583f68b9",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions dfvdfvfd",
-				"B": "Questions 78",
-				"C": "Questions f",
-				"D": "Questions D"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "tgbb",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "SQL",
-			"id": "d426f70e-1bd2-42dd-8d8f-4999ab6455ac",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions dfvdfvfd",
-				"B": "Questions 78",
-				"C": "Questions f",
-				"D": "Questions ujjyjj"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "tgbb",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "SQL",
-			"id": "9eab4c9f-d91f-4319-9081-b8f70c76e7d6",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions dfvdfvfd",
-				"B": "Questions 78",
-				"C": "Questions ffdvd",
-				"D": "Questions ujjyjj"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "tgbb",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "Java",
-			"id": "8738083c-a0de-40d4-b9b0-fb518af1afbe",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions Java is not Golang",
-				"B": "Questions 78",
-				"C": "Questions ffdvd",
-				"D": "Questions ujjyjj"
-			},
-			"type": "matching"
-		},
-		{
-			"answers": {
-				"a": "Rust",
-				"b": "try",
-				"c": "should not add",
-				"d": "bye"
-			},
-			"category": "Rust",
-			"id": "a2785f73-c514-4ea4-93a0-1a391b608c52",
-			"options": {
-				"1": "Option 1",
-				"2": "Option 2",
-				"3": "Option 3",
-				"4": "Option 4"
-			},
-			"questions": {
-				"A": "Questions Rust is not Golang",
-				"B": "Questions 1",
-				"C": "Questions 45",
-				"D": "Questions 8"
-			},
-			"type": "matching"
-		},
-		{
-			"id": "7869ab42-58f8-49a6-bfab-29ae00494998",
-			"type": "torf",
-			"category": "Golang",
-			"question": "",
-			"answer": "False"
 		}
 	]
 }
