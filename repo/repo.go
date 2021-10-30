@@ -43,7 +43,12 @@ func (r Repo) CreateNewInfo(card cards.Info) error {
 
 	err = validation.ValidateOnlyInfo(card, r.Filename)
 	if err != nil {
-		return errors.New("all fields require data")
+		return err
+	}
+
+	err = validation.ValidateCategoryInfo(card)
+	if err != nil {
+		return err
 	}
 
 	newCardInfo.Flashcards = append(newCardInfo.Flashcards, card)
@@ -75,12 +80,12 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 
 	err = validation.ValidateMatching(card, r.Filename)
 	if err != nil {
-		return errors.New("all fields require data")
+		return err
 	}
 
 	err = validation.ValidateCategoryMatching(card)
 	if err != nil {
-		return errors.New("category required")
+		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
@@ -112,12 +117,12 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 
 	err = validation.ValidateMultiple(card, r.Filename)
 	if err != nil {
-		return errors.New("all fields require data")
+		return err
 	}
 
 	err = validation.ValidateCategoryMultiple(card)
 	if err != nil {
-		return errors.New("category required")
+		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
@@ -149,7 +154,12 @@ func (r Repo) CreateNewQNA(card cards.QNA) error {
 
 	err = validation.ValidateQNA(card, r.Filename)
 	if err != nil {
-		return errors.New("all fields require data")
+		return err
+	}
+
+	err = validation.ValidateCategoryQandA(card)
+	if err != nil {
+		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
@@ -181,12 +191,12 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 
 	err = validation.ValidateTorf(card, r.Filename)
 	if err != nil {
-		return errors.New("all fields require data")
+		return err
 	}
 
 	err = validation.ValidateCategoryTORF(card)
 	if err != nil {
-		return errors.New("category required")
+		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)

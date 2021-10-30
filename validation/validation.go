@@ -115,12 +115,12 @@ func ValidateTorf(card cards.TrueOrFalse, filename string) error {
 			}
 		}
 	}
-return nil
+	return nil
 }
 
-func ValidateCategoryMatching(card cards.Matching) error{
-	if card.Category != "Golang" {
-		return errors.New("category must be Golang")
+func ValidateCategoryMatching(card cards.Matching) error {
+	if card.Category != "golang" {
+		return errors.New("category must be golang")
 	}
 	return nil
 }
@@ -148,17 +148,30 @@ func ValidateQNA(card cards.QNA, filename string) error {
 	return nil
 }
 
-func ValidateCategoryMultiple(card cards.MultipleChoice) error{
-	if card.Category != "Golang" {
-		return errors.New("category must be Golang")
+func ValidateCategoryMultiple(card cards.MultipleChoice) error {
+	if card.Category != "golang" {
+		return errors.New("category must be golang")
 	}
 	return nil
 }
 
+func ValidateCategoryTORF(card cards.TrueOrFalse) error {
+	if card.Category != "golang" {
+		return errors.New("category must be golang")
+	}
+	return nil
+}
 
-func ValidateCategoryTORF(card cards.TrueOrFalse) error{
-	if card.Category != "Golang" {
-		return errors.New("category must be Golang")
+func ValidateCategoryInfo(card cards.Info) error {
+	if card.Category != "golang" {
+		return errors.New("category must be golang")
+	}
+	return nil
+}
+
+func ValidateCategoryQandA(card cards.QNA) error {
+	if card.Category != "golang" {
+		return errors.New("category must be golang")
 	}
 	return nil
 }
