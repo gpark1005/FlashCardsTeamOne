@@ -1,7 +1,6 @@
 package service
 
 import (
-
 	"github.com/google/uuid"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
@@ -32,9 +31,8 @@ func NewService(r Repo) Service {
 }
 
 func (s Service) PostNewInfo(card cards.Info) error {
-	if card.Id == "" {
-		card.Id = uuid.New().String()
-	}
+	card.Id = uuid.New().String()
+
 	err := s.Repo.CreateNewInfo(card)
 	if err != nil {
 		return err
@@ -43,9 +41,8 @@ func (s Service) PostNewInfo(card cards.Info) error {
 }
 
 func (s Service) PostNewMatching(card cards.Matching) error {
-	if card.Id == "" {
-		card.Id = uuid.New().String()
-	}
+	card.Id = uuid.New().String()
+
 	err := s.Repo.CreateNewMatching(card)
 	if err != nil {
 		return err
@@ -54,9 +51,8 @@ func (s Service) PostNewMatching(card cards.Matching) error {
 }
 
 func (s Service) PostNewMultiple(card cards.MultipleChoice) error {
-	if card.Id == "" {
-		card.Id = uuid.New().String()
-	}
+	card.Id = uuid.New().String()
+
 	err := s.Repo.CreateNewMultiple(card)
 	if err != nil {
 		return err
@@ -65,9 +61,8 @@ func (s Service) PostNewMultiple(card cards.MultipleChoice) error {
 }
 
 func (s Service) PostNewQNA(card cards.QNA) error {
-	if card.Id == "" {
-		card.Id = uuid.New().String()
-	}
+	card.Id = uuid.New().String()
+
 	err := s.Repo.CreateNewQNA(card)
 	if err != nil {
 		return err
@@ -76,9 +71,8 @@ func (s Service) PostNewQNA(card cards.QNA) error {
 }
 
 func (s Service) PostNewTORF(card cards.TrueOrFalse) error {
-	if card.Id == "" {
-		card.Id = uuid.New().String()
-	}
+	card.Id = uuid.New().String()
+
 	err := s.Repo.CreateNewTORF(card)
 	if err != nil {
 		return err
