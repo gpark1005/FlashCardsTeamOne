@@ -5,11 +5,11 @@ type MultipleChoice struct {
 	Type     string          `json:"type"`
 	Category string          `json:"category"`
 	Question string          `json:"question"`
-	Options  MultipleChoiceO `json:"options"`
+	Options  MultipleChoiceOptions `json:"options"`
 	Answers  int             `json:"answers"`
 }
 
-type MultipleChoiceO struct {
+type MultipleChoiceOptions struct {
 	One   string `json:"1"`
 	Two   string `json:"2"`
 	Three string `json:"3"`

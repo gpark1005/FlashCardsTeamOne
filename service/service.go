@@ -104,7 +104,7 @@ func (s Service) DeletebyId(input string) error {
 	return nil
 }
 
-func (s Service) UpdatebyId(input string, card map[string]interface{}) error {
+func (s Service) UpdateById(input string, card map[string]interface{}) error {
 	err := s.Repo.Update(input, card)
 	if err != nil {
 		return err

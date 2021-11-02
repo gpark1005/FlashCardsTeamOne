@@ -18,8 +18,8 @@ type Service interface {
 	PostNewTORF(card cards.TrueOrFalse) error
 	GetAllFlashcards() (repo.Db, error)
 	GetByType(input string) (repo.DbType, error)
-	DeletebyId(input string) error
-	UpdatebyId(input string, card map[string]interface{}) error
+	DeleteById(input string) error
+	UpdateById(input string, card map[string]interface{}) error
 	GetByCategory(input string) (repo.DbType, error)
 	GetById(input string) (repo.DbType, error)
 }
@@ -32,7 +32,7 @@ func NewInfoHandler(s Service) InfoHandler {
 	return InfoHandler{
 		Svc: s,
 	}
-}
+} 
 
 var CardType map[string]interface{}
 
@@ -46,7 +46,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, "unable to decode database", http.StatusUnprocessableEntity)
+		http.Error(w, "unable to decode database", http.StatusBadRequest)
 		return
 	}
 
@@ -77,30 +77,30 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				return
 			}
 		case "info":
-			card := cards.Info{}
-			err = json.Unmarshal(data, &card)
+			infoCard := cards.Info{}
+			err = json.Unmarshal(data, &infoCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewInfo(card)
+			err = ih.Svc.PostNewInfo(infoCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
-		case "qanda":
-			qandaCard := cards.QNA{}
-			err = json.Unmarshal(data, &qandaCard)
+		case "qAndA":
+			qAndACard := cards.QNA{}
+			err = json.Unmarshal(data, &qAndACard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewQNA(qandaCard)
+			err = ih.Svc.PostNewQNA(qAndACard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
-		case "torf":
+		case "tOrF":
 			torfCard := cards.TrueOrFalse{}
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
@@ -164,7 +164,7 @@ func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) 
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	err := ih.Svc.DeletebyId(id)
+	err := ih.Svc.DeleteById(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -178,17 +178,17 @@ func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "unable to access database", http.StatusUnprocessableEntity)
+		http.Error(w, "unable to access database", http.StatusBadRequest)
 		return
 	}
 
 	err = json.Unmarshal(data, &CardType)
 	if err != nil {
-		http.Error(w, "unable to decode database", http.StatusUnprocessableEntity)
+		http.Error(w, "unable to decode database", http.StatusBadRequest)
 		return
 	}
 
-	err = ih.Svc.UpdatebyId(id, CardType)
+	err = ih.Svc.UpdateById(id, CardType)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
