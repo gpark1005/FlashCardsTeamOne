@@ -1,12 +1,12 @@
 package cards
 
 type MultipleChoice struct {
-	Id       string          `json:"id"`
-	Type     string          `json:"type"`
-	Category string          `json:"category"`
-	Question string          `json:"question"`
+	Id       string                `json:"id"`
+	Type     string                `json:"type"`
+	Category string                `json:"category"`
+	Question string                `json:"question"`
 	Options  MultipleChoiceOptions `json:"options"`
-	Answers  int             `json:"answers"`
+	Answers  int                   `json:"answers"`
 }
 
 type MultipleChoiceOptions struct {

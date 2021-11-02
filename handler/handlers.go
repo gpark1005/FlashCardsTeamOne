@@ -57,6 +57,7 @@ func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &matchCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
+				return
 			}
 
 			err = ch.Svc.PostNewMatching(matchCard)
@@ -69,6 +70,7 @@ func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &multipleCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
+				return
 			}
 
 			err = ch.Svc.PostNewMultipleChoice(multipleCard)
@@ -81,6 +83,7 @@ func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &infoCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
+				return
 			}
 
 			err = ch.Svc.PostNewInfo(infoCard)
@@ -93,6 +96,7 @@ func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &qAndACard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
+				return
 			}
 
 			err = ch.Svc.PostNewQNA(qAndACard)
@@ -105,6 +109,7 @@ func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
+				return
 			}
 
 			err = ch.Svc.PostNewTORF(torfCard)
