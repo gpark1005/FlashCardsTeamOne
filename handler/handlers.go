@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
@@ -60,15 +59,6 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			//Validating that all fields in structs are field
-			validate := validator.New()
-
-			err = validate.Struct(matchCard)
-			if err != nil {
-				http.Error(w, "all fields require data: id: must be blank, type: type should match type of card, category: must be existing categeory, questions: make sure each question is filled, options: make sure each option is filled, answers: each answer should be filled and correspond to questions/options", http.StatusBadRequest)
-				return
-			}
-
 			err = ih.Svc.PostNewMatching(matchCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -79,15 +69,6 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &multipleCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
-			}
-
-			//Validating that all fields in structs are field
-			validate := validator.New()
-
-			err = validate.Struct(multipleCard)
-			if err != nil {
-				http.Error(w, "all fields require data: id: must be blank, type: type should match type of card, category: must be existing categeory, question: make sure the question is filled, options: make sure each option is filled, answer: answer should be filled and correspond to question/options", http.StatusBadRequest)
-				return
 			}
 
 			err = ih.Svc.PostNewMultiple(multipleCard)
@@ -102,15 +83,6 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			//Validating that all fields in structs are field
-			validate := validator.New()
-
-			err = validate.Struct(card)
-			if err != nil {
-				http.Error(w, "all fields require data: id: must be blank, type: type should match type of card, category: must be existing categeory, information: info should be filled", http.StatusBadRequest)
-				return
-			}
-
 			err = ih.Svc.PostNewInfo(card)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -123,15 +95,6 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			//Validating that all fields in structs are field
-			validate := validator.New()
-
-			err = validate.Struct(qandaCard)
-			if err != nil {
-				http.Error(w, "all fields require data: id: must be blank, type: type should match type of card, category: must be existing categeory, question: make sure the question is filled, answer: answer should be filled and correspond to question", http.StatusBadRequest)
-				return
-			}
-
 			err = ih.Svc.PostNewQNA(qandaCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -142,15 +105,6 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 			err = json.Unmarshal(data, &torfCard)
 			if err != nil {
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
-			}
-
-			//Validating that all fields in structs are field
-			validate := validator.New()
-
-			err = validate.Struct(torfCard)
-			if err != nil {
-				http.Error(w, "all fields require data: id: must be blank, type: type should match type of card, category: must be existing categeory, question: make sure the question is filled, answer: answer should be filled and correspond to question", http.StatusBadRequest)
-				return
 			}
 
 			err = ih.Svc.PostNewTORF(torfCard)
