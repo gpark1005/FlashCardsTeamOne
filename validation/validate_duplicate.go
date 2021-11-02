@@ -15,8 +15,8 @@ type dbVal struct {
 
 /* This function compares the questions map from the incoming data to
 what is stored in the db to see if the card is already saved */
-func ValidateMatching(card cards.Matching, filename string) error {
-
+func ValidateDuplicateMatching(card cards.Matching) error {
+	filename := "flashcardsDb.json"
 	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
@@ -45,8 +45,8 @@ func ValidateMatching(card cards.Matching, filename string) error {
 
 /* This function compares the question from the incoming data to
 what is stored in the db to see if the card is already saved */
-func ValidateMultiple(card cards.MultipleChoice, filename string) error {
-
+func ValidateDuplicateMultipleChoice(card cards.MultipleChoice) error {
+	filename := "flashcardsDb.json"
 	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
@@ -72,7 +72,8 @@ func ValidateMultiple(card cards.MultipleChoice, filename string) error {
 	return nil
 }
 
-func ValidateOnlyInfo(card cards.Info, filename string) error {
+func ValidateDuplicateOnlyInfo(card cards.Info) error {
+	filename := "flashcardsDb.json"
 	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
@@ -95,7 +96,8 @@ func ValidateOnlyInfo(card cards.Info, filename string) error {
 	return nil
 }
 
-func ValidateTorf(card cards.TrueOrFalse, filename string) error {
+func ValidateDuplicateQNA(card cards.QNA) error {
+	filename := "flashcardsDb.json"
 	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
@@ -118,14 +120,8 @@ func ValidateTorf(card cards.TrueOrFalse, filename string) error {
 	return nil
 }
 
-func ValidateCategoryMatching(card cards.Matching) error {
-	if card.Category != "golang" {
-		return errors.New("category must be golang")
-	}
-	return nil
-}
-
-func ValidateQNA(card cards.QNA, filename string) error {
+func ValidateDuplicateTorF(card cards.TrueOrFalse) error {
+	filename := "flashcardsDb.json"
 	Db := dbVal{}
 
 	compare, err := ioutil.ReadFile(filename)
@@ -144,34 +140,6 @@ func ValidateQNA(card cards.QNA, filename string) error {
 				return errors.New("this card already exists")
 			}
 		}
-	}
-	return nil
-}
-
-func ValidateCategoryMultiple(card cards.MultipleChoice) error {
-	if card.Category != "golang" {
-		return errors.New("category must be golang")
-	}
-	return nil
-}
-
-func ValidateCategoryTORF(card cards.TrueOrFalse) error {
-	if card.Category != "golang" {
-		return errors.New("category must be golang")
-	}
-	return nil
-}
-
-func ValidateCategoryInfo(card cards.Info) error {
-	if card.Category != "golang" {
-		return errors.New("category must be golang")
-	}
-	return nil
-}
-
-func ValidateCategoryQandA(card cards.QNA) error {
-	if card.Category != "golang" {
-		return errors.New("category must be golang")
 	}
 	return nil
 }

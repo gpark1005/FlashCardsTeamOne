@@ -8,16 +8,12 @@ import (
 
 func main() {
 	fn := "flashcardsDb.json"
-	// ext := filepath.Ext(fn)
-	// if ext != ".json" {
-	// 	log.Fatalln("File extension invaild")
-	// }
 
 	r := repo.NewRepo(fn)
 
 	svc := service.NewService(r)
 
-	hdlr := handler.NewInfoHandler(svc)
+	hdlr := handler.NewCardHandler(svc)
 
 	router := handler.ConfigureRouter(hdlr)
 

@@ -4,11 +4,12 @@ import (
 	"github.com/google/uuid"
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
 	"github.com/gpark1005/FlashCardsTeamOne/repo"
+	"github.com/gpark1005/FlashCardsTeamOne/validation"
 )
 
 type Repo interface {
 	CreateNewMatching(card cards.Matching) error
-	CreateNewMultiple(card cards.MultipleChoice) error
+	CreateNewMultipleChoice(card cards.MultipleChoice) error
 	CreateNewInfo(card cards.Info) error
 	CreateNewQNA(card cards.QNA) error
 	CreateNewTORF(card cards.TrueOrFalse) error
@@ -30,30 +31,50 @@ func NewService(r Repo) Service {
 	}
 }
 
-func (s Service) PostNewInfo(card cards.Info) error {
-	card.Id = uuid.New().String()
-
-	err := s.Repo.CreateNewInfo(card)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (s Service) PostNewMatching(card cards.Matching) error {
 	card.Id = uuid.New().String()
 
-	err := s.Repo.CreateNewMatching(card)
+	err := validation.ValidateMatchingFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.CreateNewMatching(card)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s Service) PostNewMultiple(card cards.MultipleChoice) error {
+func (s Service) PostNewMultipleChoice(card cards.MultipleChoice) error {
 	card.Id = uuid.New().String()
 
-	err := s.Repo.CreateNewMultiple(card)
+	err := validation.ValidateMultipleChoiceFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.CreateNewMultipleChoice(card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s Service) PostNewInfo(card cards.Info) error {
+	card.Id = uuid.New().String()
+
+	err := validation.ValidateOnlyInfoFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateDuplicateOnlyInfo(card)
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.CreateNewInfo(card)
 	if err != nil {
 		return err
 	}
@@ -63,7 +84,12 @@ func (s Service) PostNewMultiple(card cards.MultipleChoice) error {
 func (s Service) PostNewQNA(card cards.QNA) error {
 	card.Id = uuid.New().String()
 
-	err := s.Repo.CreateNewQNA(card)
+	err := validation.ValidateQNAFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.CreateNewQNA(card)
 	if err != nil {
 		return err
 	}
@@ -73,7 +99,12 @@ func (s Service) PostNewQNA(card cards.QNA) error {
 func (s Service) PostNewTORF(card cards.TrueOrFalse) error {
 	card.Id = uuid.New().String()
 
-	err := s.Repo.CreateNewTORF(card)
+	err := validation.ValidateTorFFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.CreateNewTORF(card)
 	if err != nil {
 		return err
 	}
@@ -96,7 +127,7 @@ func (s Service) GetByType(input string) (repo.DbType, error) {
 	return searchRequest, nil
 }
 
-func (s Service) DeletebyId(input string) error {
+func (s Service) DeleteById(input string) error {
 	err := s.Repo.Delete(input)
 	if err != nil {
 		return err

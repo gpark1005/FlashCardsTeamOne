@@ -28,43 +28,6 @@ func NewRepo(fn string) Repo {
 	}
 }
 
-func (r Repo) CreateNewInfo(card cards.Info) error {
-	newCardInfo := Db{}
-
-	output, err := ioutil.ReadFile(r.Filename)
-	if err != nil {
-		return errors.New("unable to read file")
-	}
-
-	err = json.Unmarshal(output, &newCardInfo)
-	if err != nil {
-		return errors.New("unable to decode database")
-	}
-
-	err = validation.ValidateOnlyInfo(card, r.Filename)
-	if err != nil {
-		return err
-	}
-
-	err = validation.ValidateCategoryInfo(card)
-	if err != nil {
-		return err
-	}
-
-	newCardInfo.Flashcards = append(newCardInfo.Flashcards, card)
-
-	input, err := json.MarshalIndent(newCardInfo, "", "	")
-	if err != nil {
-		return errors.New("unable to encode database")
-	}
-
-	err = ioutil.WriteFile(r.Filename, input, 0644)
-	if err != nil {
-		return errors.New("unable to write to file")
-	}
-	return nil
-}
-
 func (r Repo) CreateNewMatching(card cards.Matching) error {
 	newcard := Db{}
 
@@ -78,12 +41,7 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateMatching(card, r.Filename)
-	if err != nil {
-		return err
-	}
-
-	err = validation.ValidateCategoryMatching(card)
+	err = validation.ValidateDuplicateMatching(card)
 	if err != nil {
 		return err
 	}
@@ -102,7 +60,7 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 	return nil
 }
 
-func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
+func (r Repo) CreateNewMultipleChoice(card cards.MultipleChoice) error {
 	newcard := Db{}
 
 	output, err := ioutil.ReadFile(r.Filename)
@@ -115,12 +73,7 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateMultiple(card, r.Filename)
-	if err != nil {
-		return err
-	}
-
-	err = validation.ValidateCategoryMultiple(card)
+	err = validation.ValidateDuplicateMultipleChoice(card)
 	if err != nil {
 		return err
 	}
@@ -128,6 +81,33 @@ func (r Repo) CreateNewMultiple(card cards.MultipleChoice) error {
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
+	if err != nil {
+		return errors.New("unable to encode database")
+	}
+
+	err = ioutil.WriteFile(r.Filename, input, 0644)
+	if err != nil {
+		return errors.New("unable to write to file")
+	}
+	return nil
+}
+
+func (r Repo) CreateNewInfo(card cards.Info) error {
+	newCardInfo := Db{}
+
+	output, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return errors.New("unable to read file")
+	}
+
+	err = json.Unmarshal(output, &newCardInfo)
+	if err != nil {
+		return errors.New("unable to decode database")
+	}
+
+	newCardInfo.Flashcards = append(newCardInfo.Flashcards, card)
+
+	input, err := json.MarshalIndent(newCardInfo, "", "	")
 	if err != nil {
 		return errors.New("unable to encode database")
 	}
@@ -152,12 +132,7 @@ func (r Repo) CreateNewQNA(card cards.QNA) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateQNA(card, r.Filename)
-	if err != nil {
-		return err
-	}
-
-	err = validation.ValidateCategoryQandA(card)
+	err = validation.ValidateDuplicateQNA(card)
 	if err != nil {
 		return err
 	}
@@ -189,12 +164,7 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateTorf(card, r.Filename)
-	if err != nil {
-		return err
-	}
-
-	err = validation.ValidateCategoryTORF(card)
+	err = validation.ValidateDuplicateTorF(card)
 	if err != nil {
 		return err
 	}

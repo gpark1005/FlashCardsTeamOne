@@ -12,7 +12,7 @@ import (
 
 type Service interface {
 	PostNewMatching(card cards.Matching) error
-	PostNewMultiple(card cards.MultipleChoice) error
+	PostNewMultipleChoice(card cards.MultipleChoice) error
 	PostNewInfo(card cards.Info) error
 	PostNewQNA(card cards.QNA) error
 	PostNewTORF(card cards.TrueOrFalse) error
@@ -24,19 +24,19 @@ type Service interface {
 	GetById(input string) (repo.DbType, error)
 }
 
-type InfoHandler struct {
+type CardHandler struct {
 	Svc Service
 }
 
-func NewInfoHandler(s Service) InfoHandler {
-	return InfoHandler{
+func NewCardHandler(s Service) CardHandler {
+	return CardHandler{
 		Svc: s,
 	}
-} 
+}
 
 var CardType map[string]interface{}
 
-func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -59,7 +59,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewMatching(matchCard)
+			err = ch.Svc.PostNewMatching(matchCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
@@ -71,7 +71,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewMultiple(multipleCard)
+			err = ch.Svc.PostNewMultipleChoice(multipleCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
@@ -83,7 +83,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewInfo(infoCard)
+			err = ch.Svc.PostNewInfo(infoCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
@@ -95,7 +95,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewQNA(qAndACard)
+			err = ch.Svc.PostNewQNA(qAndACard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
@@ -107,7 +107,7 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "request body syntax is not valid", http.StatusBadRequest)
 			}
 
-			err = ih.Svc.PostNewTORF(torfCard)
+			err = ch.Svc.PostNewTORF(torfCard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
@@ -121,8 +121,8 @@ func (ih InfoHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Reques
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Request) {
-	myDb, err := ih.Svc.GetAllFlashcards()
+func (ch CardHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Request) {
+	myDb, err := ch.Svc.GetAllFlashcards()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -139,11 +139,11 @@ func (ih InfoHandler) GetFlashcardsHandler(w http.ResponseWriter, r *http.Reques
 	w.Write(db)
 }
 
-func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["type"]
 
-	getType, err := ih.Svc.GetByType(id)
+	getType, err := ch.Svc.GetByType(id)
 	if err != nil {
 		http.Error(w, err.Error(), 404)
 		return
@@ -160,11 +160,11 @@ func (ih InfoHandler) GetByTypeHandler(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(flashcard)
 }
 
-func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	err := ih.Svc.DeleteById(id)
+	err := ch.Svc.DeleteById(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -172,7 +172,7 @@ func (ih InfoHandler) DeleteByIdHandler(w http.ResponseWriter, r *http.Request) 
 
 }
 
-func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -188,18 +188,18 @@ func (ih InfoHandler) UpdateByIdHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = ih.Svc.UpdateById(id, CardType)
+	err = ch.Svc.UpdateById(id, CardType)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 }
 
-func (ih InfoHandler) GetByCategoryHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) GetByCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	category := vars["category"]
 
-	getCategory, err := ih.Svc.GetByCategory(category)
+	getCategory, err := ch.Svc.GetByCategory(category)
 	if err != nil {
 		http.Error(w, err.Error(), 404)
 		return
@@ -216,11 +216,11 @@ func (ih InfoHandler) GetByCategoryHandler(w http.ResponseWriter, r *http.Reques
 	_, _ = w.Write(flashcard)
 }
 
-func (ih InfoHandler) GetByIdHandler(w http.ResponseWriter, r *http.Request) {
+func (ch CardHandler) GetByIdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	getId, err := ih.Svc.GetById(id)
+	getId, err := ch.Svc.GetById(id)
 	if err != nil {
 		http.Error(w, err.Error(), 404)
 		return

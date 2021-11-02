@@ -5,5 +5,5 @@ type TrueOrFalse struct {
 	Type     string `json:"type"`
 	Category string `json:"category"`
 	Question string `json:"question"`
-	Answer   string `json:"answer"`
+	Answer   bool   `json:"answer"`
 }

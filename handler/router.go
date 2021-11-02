@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func ConfigureRouter(handler InfoHandler) *mux.Router {
+func ConfigureRouter(handler CardHandler) *mux.Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/flashcards", handler.PostFlashcardHandler).Methods("POST")
