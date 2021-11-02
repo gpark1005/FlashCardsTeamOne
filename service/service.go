@@ -39,6 +39,11 @@ func (s Service) PostNewMatching(card cards.Matching) error {
 		return err
 	}
 
+	err = validation.ValidateDuplicateMatching(card)
+	if err != nil {
+		return err
+	}
+
 	err = s.Repo.CreateNewMatching(card)
 	if err != nil {
 		return err
@@ -50,6 +55,11 @@ func (s Service) PostNewMultipleChoice(card cards.MultipleChoice) error {
 	card.Id = uuid.New().String()
 
 	err := validation.ValidateMultipleChoiceFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateDuplicateMultipleChoice(card)
 	if err != nil {
 		return err
 	}
@@ -89,6 +99,11 @@ func (s Service) PostNewQNA(card cards.QNA) error {
 		return err
 	}
 
+	err = validation.ValidateDuplicateQNA(card)
+	if err != nil {
+		return err
+	}
+
 	err = s.Repo.CreateNewQNA(card)
 	if err != nil {
 		return err
@@ -100,6 +115,11 @@ func (s Service) PostNewTORF(card cards.TrueOrFalse) error {
 	card.Id = uuid.New().String()
 
 	err := validation.ValidateTorFFields(card)
+	if err != nil {
+		return err
+	}
+
+	err = validation.ValidateDuplicateTorF(card)
 	if err != nil {
 		return err
 	}

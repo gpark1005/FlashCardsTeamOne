@@ -7,7 +7,6 @@ import (
 	"reflect"
 
 	"github.com/gpark1005/FlashCardsTeamOne/cards"
-	"github.com/gpark1005/FlashCardsTeamOne/validation"
 )
 
 type Db struct {
@@ -41,11 +40,6 @@ func (r Repo) CreateNewMatching(card cards.Matching) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateDuplicateMatching(card)
-	if err != nil {
-		return err
-	}
-
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
@@ -71,11 +65,6 @@ func (r Repo) CreateNewMultipleChoice(card cards.MultipleChoice) error {
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
 		return errors.New("unable to decode database")
-	}
-
-	err = validation.ValidateDuplicateMultipleChoice(card)
-	if err != nil {
-		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
@@ -132,11 +121,6 @@ func (r Repo) CreateNewQNA(card cards.QNA) error {
 		return errors.New("unable to decode database")
 	}
 
-	err = validation.ValidateDuplicateQNA(card)
-	if err != nil {
-		return err
-	}
-
 	newcard.Flashcards = append(newcard.Flashcards, card)
 
 	input, err := json.MarshalIndent(newcard, "", "	")
@@ -162,11 +146,6 @@ func (r Repo) CreateNewTORF(card cards.TrueOrFalse) error {
 	err = json.Unmarshal(output, &newcard)
 	if err != nil {
 		return errors.New("unable to decode database")
-	}
-
-	err = validation.ValidateDuplicateTorF(card)
-	if err != nil {
-		return err
 	}
 
 	newcard.Flashcards = append(newcard.Flashcards, card)
