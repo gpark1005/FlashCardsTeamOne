@@ -42,7 +42,7 @@ func ValidateDuplicateMatching(card cards.Matching) error {
 	}
 
 	for _, val := range Db.Flashcards {
-		if cQ, ok := val["answers"]; ok {
+		if cQ, ok := val["options"]; ok {
 			eq := reflect.DeepEqual(card.Answers, cQ)
 			if eq {
 				return errors.New("this card already exists")
