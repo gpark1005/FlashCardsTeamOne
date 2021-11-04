@@ -33,6 +33,34 @@ func ValidateMatchingFields(card cards.Matching) error {
 		}
 	}
 
+	// check that will make sure question keys are a letter
+	questionCount := 0
+
+	for key := range card.Questions {
+		_, err := strconv.Atoi(key)
+		if err != nil {
+			questionCount++
+		}
+
+		if questionCount != len(card.Questions) {
+			return errors.New("each question key must be a letter")
+		}
+	}
+
+	// check that will make sure answer keys are a letter
+	aCount := 0
+
+	for key := range card.Answers {
+		_, err := strconv.Atoi(key)
+		if err != nil {
+			aCount++
+		}
+
+		if aCount != len(card.Answers) {
+			return errors.New("each answer key must be a letter")
+		}
+	}
+
 	// check that will make sure that the option keys are numbers that incroment up from 1
 	optionCount := len(card.Options)
 	okCount := 0
@@ -84,6 +112,23 @@ func ValidateMatchingFields(card cards.Matching) error {
 
 	if count != len(card.Answers) {
 		return errors.New("answers must be a number that is in options")
+	}
+
+	// check that will make sure answer keys are a question key
+	answerCount := 0
+
+	for key := range card.Answers {
+		check := card.Questions
+
+		if _, ok := check[key]; ok {
+			if ok {
+				answerCount++
+			}
+		}
+	}
+
+	if answerCount != len(card.Answers) {
+		return errors.New("answer keys must be a question key, case sensitive")
 	}
 
 	//checks to see if field names are valid
